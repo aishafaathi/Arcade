@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Volume2, VolumeX, Moon, Sun, LogOut, ArrowLeft, Gamepad2 } from 'lucide-react';
+import { Sparkles, Volume2, VolumeX, Moon, Sun, LogOut, ArrowLeft, ShieldCheck } from 'lucide-react';
 import { sounds } from '../SoundEffects';
 
 export function Navbar({ 
@@ -11,7 +11,9 @@ export function Navbar({
   setIsDarkMode, 
   isAudioOn, 
   setIsAudioOn, 
-  user 
+  user,
+  profileRole,
+  onGoToAdmin
 }) {
   const handleAudioToggle = () => {
     const nextState = !isAudioOn;
@@ -109,6 +111,21 @@ export function Navbar({
           >
             {isDarkMode ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-zen-plum" />}
           </button>
+
+          {/* Admin Area */}
+          {isAuthenticated && profileRole === 'admin' && (
+            <button
+              onClick={() => {
+                sounds.playClick();
+                onGoToAdmin();
+              }}
+              title="Admin Area"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-zen-plum text-white hover:bg-zen-plumHover transition-all text-xs font-bold"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span className="hidden sm:inline">Admin Area</span>
+            </button>
+          )}
 
           {/* User Profile & Logout */}
           {isAuthenticated && (

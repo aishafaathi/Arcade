@@ -125,11 +125,43 @@ function startGame() {
     Game.startGame();
 }
 
+async function saveCompletedProgress(stars) {
+    try {
+        const { saveGameProgress } = await import('../../lib/gameProgress.js');
+
+        await saveGameProgress({
+            gameId: 2,
+            progressData: {
+                currentLevel: state.currentLevel,
+                stars,
+                totalAttempts: state.totalAttempts,
+                mistakes: state.mistakes,
+                hintsUsed: state.hintsUsed,
+                peeksUsed: state.peeksUsed,
+                playerName: state.playerName,
+                playerAvatar: state.playerAvatar,
+                animoId: state.animoId,
+                unlockedInsights: state.unlockedInsights,
+                discoveredMixes: state.discoveredMixes,
+                selectedEmotion: state.selectedEmotion,
+            },
+            score: stars,
+            level: state.currentLevel,
+            status: 'completed',
+        });
+
+        console.log('SUPABASE PROGRESS SAVED');
+    } catch (error) {
+        console.error('SUPABASE PROGRESS SAVE FAILED', error);
+    }
+}
+
 /** Called by OverlayMatch "Keep Going!" — triggers victory if all pairs done */
 function onMatchContinue() {
     if (Game.isComplete()) {
         const stars = Game.calcStars();
         Victory.populate({ stars });
+        void saveCompletedProgress(stars);
         navigate('victory');
     }
 }
@@ -145,6 +177,7 @@ Game.init({
     onVictory: () => {
         const stars = Game.calcStars();
         Victory.populate({ stars });
+        void saveCompletedProgress(stars);
         navigate('victory');
     },
 });

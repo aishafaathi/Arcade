@@ -5,6 +5,30 @@ import LevelSelectScreen from './pages/LevelSelectScreen.jsx';
 import QuizGame from './QuizGame.jsx';
 import { audioManager } from './utils/audio.js';
 
+async function saveMythVsFactProgress({
+  correctIds,
+  level,
+  status,
+}) {
+  try {
+    const { saveGameProgress } = await import('../../../lib/gameProgress.js');
+
+    await saveGameProgress({
+      gameId: 6,
+      progressData: {
+        currentLevel: level,
+        correctQuestionIds: Array.from(correctIds),
+        correctCount: correctIds.size,
+      },
+      score: correctIds.size,
+      level,
+      status,
+    });
+  } catch (error) {
+    console.error('MYTH VS FACT PROGRESS SAVE FAILED', error);
+  }
+}
+
 const App = () => {
   const [gameState, setGameState] = useState('SPLASH');
   const [activeLevel, setActiveLevel] = useState(null);
@@ -38,6 +62,16 @@ const App = () => {
     setGlobalCorrectIds(prev => {
       const newSet = new Set(prev);
       newSet.add(questionId);
+
+      const currentLevel = activeLevel?.id || 1;
+      const status = newSet.size >= 36 ? 'completed' : 'playing';
+
+      void saveMythVsFactProgress({
+        correctIds: newSet,
+        level: currentLevel,
+        status,
+      });
+
       return newSet;
     });
   };

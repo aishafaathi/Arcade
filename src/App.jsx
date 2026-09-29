@@ -4,6 +4,7 @@ import { Screen1_Login } from './components/Screen1_Login';
 import { Screen2_ArcadeCollection } from './components/Screen2_ArcadeCollection';
 import { MiniGameModal } from './components/MiniGameModal';
 import { EmbeddedGame } from './components/EmbeddedGame';
+import { AdminDashboard } from './components/AdminDashboard';
 import { supabase } from './lib/supabase';
 
 export function App() {
@@ -14,6 +15,7 @@ export function App() {
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isParticlesOn, setIsParticlesOn] = useState(true);
   const [activeMiniGame, setActiveMiniGame] = useState(null);
+  const [profileRole, setProfileRole] = useState('player');
 
   const [user, setUser] = useState({
     name: 'Anushka',
@@ -24,7 +26,7 @@ export function App() {
   useEffect(() => {
     let mounted = true;
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!mounted) return;
       if (session?.user) {
         setUser({
@@ -32,6 +34,14 @@ export function App() {
           email: session.user.email || '',
           avatar: '🧘',
         });
+
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('name, role, is_active')
+          .eq('id', session.user.id)
+          .maybeSingle();
+
+        setProfileRole(profile?.role || 'player');
         setIsAuthenticated(true);
         setCurrentView('arcade');
       }
@@ -50,6 +60,16 @@ export function App() {
         email: session.user.email || '',
         avatar: '🧘',
       });
+
+      supabase
+        .from('profiles')
+        .select('name, role, is_active')
+        .eq('id', session.user.id)
+        .maybeSingle()
+        .then(({ data: profile }) => {
+          setProfileRole(profile?.role || 'player');
+        });
+
       setCurrentView('arcade');
     });
 
@@ -87,7 +107,14 @@ export function App() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    setProfileRole('player');
     setActiveMiniGame(null);
+  };
+
+  const handleGoToAdmin = () => {
+    if (profileRole === 'admin') {
+      setCurrentView('admin');
+    }
   };
 
   const handleSelectGame = (gameId) => {
@@ -137,6 +164,8 @@ export function App() {
           isAudioOn={isAudioOn}
           setIsAudioOn={setIsAudioOn}
           user={user}
+          profileRole={profileRole}
+          onGoToAdmin={handleGoToAdmin}
         />
       )}
 
@@ -152,6 +181,12 @@ export function App() {
           <Screen2_ArcadeCollection
             onSelectGame={handleSelectGame}
           />
+        ) : currentView === 'admin' ? (
+          profileRole === 'admin' ? (
+            <AdminDashboard onBackToArcade={handleGoToArcade} />
+          ) : (
+            <Screen2_ArcadeCollection onSelectGame={handleSelectGame} />
+          )
         ) : currentView === 'words_of_wisdom' ? (
           <EmbeddedGame gameId="words_of_wisdom" title="Words of Wisdom" onBackToArcade={handleGoToArcade} />
         ) : currentView === 'little_big_feelings' ? (

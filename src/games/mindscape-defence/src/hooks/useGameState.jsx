@@ -104,18 +104,49 @@ export const GameStateProvider = ({ children }) => {
     }
   }, [gameStatus]);
 
-  const handleSuccessfulCope = (points, insightText) => {
-    if (gameStatus !== 'playing') return;
-    audioSynth.playSuccess(); // play success arpeggio
-    setScore(prev => prev + points); 
-    setConnection(prev => Math.min(prev + 10, 100)); 
-    setEnemiesDefeatedThisLevel(prev => prev + 1);
-    setActiveInsight(insightText);
-    setIsCelebrating(true);
-    setTimeout(() => setActiveInsight(null), 3500);
-    setTimeout(() => setIsCelebrating(false), 2000);
-  };
+const handleSuccessfulCope = (points, insightText) => {
+  if (gameStatus !== 'playing') return;
 
+  audioSynth.playSuccess();
+
+  const nextScore = score + points;
+  const nextEnemies = enemiesDefeatedThisLevel + 1;
+  const levelComplete = nextEnemies >= level * 5;
+  const finalGameComplete = levelComplete && level === 6;
+
+  setScore(nextScore);
+  setConnection(prev => Math.min(prev + 10, 100));
+  setEnemiesDefeatedThisLevel(nextEnemies);
+  setActiveInsight(insightText);
+  setIsCelebrating(true);
+
+  void import('../../../../lib/gameProgress.js')
+    .then(({ saveGameProgress }) =>
+      saveGameProgress({
+        gameId: 4,
+        progressData: {
+          currentLevel: level,
+          maxUnlockedLevel,
+          enemiesDefeatedThisLevel: nextEnemies,
+          connection,
+          lives,
+          wrongAnswerCount,
+        },
+        score: nextScore,
+        level,
+        status: finalGameComplete ? 'completed' : 'playing',
+      })
+    )
+    .catch(error => {
+      console.error('MINDSCAPE PROGRESS SAVE FAILED', error);
+    });
+
+  setActiveInsight(insightText);
+  setIsCelebrating(true);
+
+  setTimeout(() => setActiveInsight(null), 3500);
+  setTimeout(() => setIsCelebrating(false), 2000);
+};
   const completeOnboarding = useCallback(() => {
     localStorage.setItem('mindscapeOnboardingCompleted', 'true');
     setGameStatus('menu');
