@@ -40,13 +40,12 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       bgGradient: 'from-[#FAF7F2] to-[#E8E3C5]/40',
       borderColor: 'border-zen-creamBg',
       imageSvg: (
-        <svg className="w-full h-32 object-contain" viewBox="0 0 200 120" fill="none">
-          <rect width="200" height="120" rx="16" fill="#FAF7F2" />
-          <path d="M30 90 Q 100 80 170 90 L 160 105 H 40 Z" fill="#7A8450" opacity="0.8" />
-          <circle cx="100" cy="40" r="10" stroke="#4A353B" strokeWidth="3" fill="#FFF" />
-          <path d="M100 50 V 70 M100 58 L 85 65 M100 58 L 115 50 M100 70 L 90 85 M100 70 L 110 85" stroke="#4A353B" strokeWidth="3" strokeLinecap="round" />
-          <polygon points="150,35 153,42 160,43 155,48 156,55 150,51 144,55 145,48 140,43 147,42" fill="#EADF9E" stroke="#7A8450" strokeWidth="1" />
-        </svg>
+        <img
+          src="/game-logos/stick-man.svg"
+          alt="Stick Man to the Rescue"
+          className="h-32 w-full object-contain"
+        />
+      
       )
     },
     {
@@ -58,21 +57,12 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       bgGradient: 'from-[#EFF2E1] to-[#E3E8CE]',
       borderColor: 'border-zen-olive/40',
       imageSvg: (
-        <svg className="w-full h-32 object-contain" viewBox="0 0 200 120" fill="none">
-          <rect width="200" height="120" rx="16" fill="#EFF2E1" />
-          <ellipse cx="60" cy="70" rx="18" ry="22" fill="#F7C5D1" />
-          <circle cx="55" cy="65" r="2.5" fill="#4A353B" />
-          <circle cx="65" cy="65" r="2.5" fill="#4A353B" />
-
-          <ellipse cx="100" cy="65" rx="24" ry="28" fill="#EADF9E" />
-          <circle cx="93" cy="60" r="3" fill="#4A353B" />
-          <circle cx="107" cy="60" r="3" fill="#4A353B" />
-          <path d="M96 68 Q 100 73 104 68" stroke="#4A353B" strokeWidth="2" strokeLinecap="round" />
-
-          <ellipse cx="140" cy="72" rx="16" ry="20" fill="#76C4C6" />
-          <circle cx="135" cy="68" r="2" fill="#4A353B" />
-          <circle cx="145" cy="68" r="2" fill="#4A353B" />
-        </svg>
+        <img
+          src="/game-logos/little-big-feelings.svg"
+          alt="Little Big Feelings"
+          className="h-32 w-full object-contain"
+        />
+      
       )
     },
     // {
@@ -103,7 +93,12 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       bgGradient: 'from-[#FFF7D6] to-[#FDECC8]',
       borderColor: 'border-zen-yellow',
       imageSvg: (
-        <div className="flex h-32 items-center justify-center bg-[#FFF7D6] text-5xl">✨💛✨</div>
+        <img
+          src="/game-logos/feeling-fusion.svg"
+          alt="Feeling Fusion"
+          className="h-32 w-full object-contain"
+        />
+      
       )
     },
     {
@@ -115,7 +110,12 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       bgGradient: 'from-[#E8F7F5] to-[#D9EEEC]',
       borderColor: 'border-zen-teal/40',
       imageSvg: (
-        <div className="flex h-32 items-center justify-center gap-3 bg-[#E8F7F5] text-4xl">🧠⚖️</div>
+        <img
+          src="/game-logos/myth-vs-fact.svg"
+          alt="Myth vs Fact"
+          className="h-32 w-full object-contain"
+        />
+      
       )
     },
     {
@@ -127,7 +127,12 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       bgGradient: 'from-[#F3F0FF] to-[#E7E0FA]',
       borderColor: 'border-indigo-200',
       imageSvg: (
-        <div className="flex h-32 items-center justify-center bg-[#F3F0FF] text-5xl">📡💬</div>
+        <img
+          src="/game-logos/signal-scout.svg"
+          alt="Signal Scout"
+          className="h-32 w-full object-contain"
+        />
+      
       )
     }
   ];
