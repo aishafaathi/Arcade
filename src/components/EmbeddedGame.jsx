@@ -1,4 +1,5 @@
 import React from 'react';
+import WordsOfWisdom from '../games/Words-of-Wisdom/App.jsx';
 
 const GAME_PATHS = {
   stick_man: '/src/games/stickman/index.html',
@@ -12,6 +13,14 @@ const GAME_PATHS = {
 
 export function EmbeddedGame({ gameId, title, onBackToArcade }) {
   const gamePath = GAME_PATHS[gameId];
+
+  if (gameId === 'words_of_wisdom') {
+    return (
+      <div className="fixed inset-0 z-20 bg-slate-950">
+        <WordsOfWisdom />
+      </div>
+    );
+  }
 
   if (!gamePath) return null;
 

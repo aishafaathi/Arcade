@@ -1,36 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Search, Sparkles, Play, Rocket } from 'lucide-react';
 import { sounds } from '../SoundEffects';
 
 export function Screen2_ArcadeCollection({ onSelectGame }) {
   const [searchQuery, setSearchQuery] = useState('');
 
+  useEffect(() => {
+    const handleNavbarSearch = (event) => {
+      setSearchQuery(event.detail || '');
+    };
+
+    window.addEventListener('arcade-search-change', handleNavbarSearch);
+    return () => window.removeEventListener('arcade-search-change', handleNavbarSearch);
+  }, []);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    const focusSearch = () => {
+      searchInputRef.current?.focus();
+    };
+
+    window.addEventListener('focus-arcade-search', focusSearch);
+    return () => window.removeEventListener('focus-arcade-search', focusSearch);
+  }, []);
+
   const games = [
-    // {
-    //   id: 'words_of_wisdom',
-    //   title: 'Words of Wisdom',
-    //   category: 'Mindful Puzzles',
-    //   tag: 'CALMING',
-    //   badgeColor: 'bg-zen-pinkAccent text-zen-plum',
-    //   description: 'A calming puzzle & quote builder to inspire mindfulness.',
-    //   bgGradient: 'from-[#FFF3F5] to-[#FCEBEF]',
-    //   borderColor: 'border-zen-pinkAccent',
-    //   imageSvg: (
-    //     <svg className="w-full h-32 object-contain" viewBox="0 0 200 120" fill="none">
-    //       <rect width="200" height="120" rx="16" fill="#FCEBEF" />
-    //       <ellipse cx="100" cy="80" rx="40" ry="25" fill="#FFFFFF" />
-    //       <ellipse cx="80" cy="70" rx="20" ry="20" fill="#FFFFFF" />
-    //       <ellipse cx="120" cy="70" rx="20" ry="20" fill="#FFFFFF" />
-    //       <path d="M94 65C95 67 97 67 98 65" stroke="#4A353B" strokeWidth="2" strokeLinecap="round" />
-    //       <path d="M102 65C103 67 105 67 106 65" stroke="#4A353B" strokeWidth="2" strokeLinecap="round" />
-    //       <path d="M85 75L100 80L115 75V88L100 92L85 88V75Z" fill="#F7C5D1" stroke="#A86B79" strokeWidth="1.5" />
-    //       <path d="M100 80V92" stroke="#A86B79" strokeWidth="1.5" />
-    //       <polygon points="100,20 103,28 111,31 103,34 100,42 97,34 89,31 97,28" fill="#EADF9E" />
-    //       <circle cx="50" cy="30" r="3" fill="#A86B79" />
-    //       <circle cx="155" cy="40" r="4" fill="#7A8450" />
-    //     </svg>
-    //   )
-    // },
+    {
+      id: 'words_of_wisdom',
+      title: 'Words of Wisdom',
+      category: 'Mindful Puzzles',
+      badgeColor: 'bg-zen-pinkAccent text-zen-plum',
+      description: 'A calming puzzle and quote experience to inspire mindfulness.',
+      bgGradient: 'from-[#FFF3F5] to-[#FCEBEF]',
+      borderColor: 'border-zen-pinkAccent',
+      imageSvg: (
+        <img
+          src="/words-of-wisdom-logo.svg"
+          alt="Words of Wisdom"
+          className="h-32 w-full object-contain"
+        />
+      )
+    },
     {
       id: 'stick_man',
       title: 'Stick Man to the Rescue',
@@ -65,25 +75,22 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       
       )
     },
-    // {
-    //   id: 'mindscape_defense',
-    //   title: 'Mindscape Defense',
-    //   category: 'Relaxed Strategy',
-    //   tag: 'PROTECT PEACE',
-    //   badgeColor: 'bg-zen-pinkHeader text-zen-plum',
-    //   description: 'Protect your inner peace in a relaxed strategy experience.',
-    //   bgGradient: 'from-[#FAF2F4] to-[#FCEBEF]',
-    //   borderColor: 'border-zen-mauve/30',
-    //   imageSvg: (
-    //     <svg className="w-full h-32 object-contain" viewBox="0 0 200 120" fill="none">
-    //       <rect width="200" height="120" rx="16" fill="#FAF2F4" />
-    //       <polygon points="100,25 125,55 75,55" fill="#A86B79" />
-    //       <rect x="85" y="55" width="30" height="35" fill="#FCEBEF" stroke="#A86B79" strokeWidth="2" />
-    //       <circle cx="100" cy="70" r="6" fill="#EADF9E" />
-    //       <circle cx="100" cy="60" r="45" stroke="#F7C5D1" strokeWidth="2" strokeDasharray="4 4" />
-    //     </svg>
-    //   )
-    // },
+    {
+      id: 'mindscape_defense',
+      title: 'Mindscape Defense',
+      category: 'Mind & Coping',
+      badgeColor: 'bg-zen-tealBg text-zen-teal',
+      description: 'Build healthy coping skills and protect your mental wellbeing through mindful challenges.',
+      bgGradient: 'from-[#E8F7F5] to-[#D8F0EC]',
+      borderColor: 'border-zen-teal/40',
+      imageSvg: (
+        <img
+          src="/mindscape-defense-logo.svg"
+          alt="Mindscape Defense"
+          className="h-32 w-full object-contain"
+        />
+      )
+    },
     {
       id: 'feeling_fusion',
       title: 'Feeling Fusion',
@@ -148,10 +155,6 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zen-pinkAccent/40 text-zen-plum text-xs font-bold mb-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Cozy Game Suite</span>
-          </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zen-plum font-display">
             Arcade Collection
           </h2>
@@ -160,17 +163,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
           </p>
         </div>
 
-        {/* Search Bar */}
-        <div className="relative w-full md:w-72">
-          <Search className="w-4 h-4 text-zen-mauve absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search cozy games..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white/80 border border-zen-pinkAccent/50 rounded-full text-xs font-medium text-zen-plum placeholder-zen-mauve/60 focus:outline-none focus:border-zen-plum shadow-sm"
-          />
-        </div>
+
       </div>
 
       {/* Game Cards Grid */}
@@ -222,18 +215,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
         ))}
       </div>
 
-      {/* Footer Banner */}
-      <div className="mt-12 p-6 rounded-3xl bg-zen-yellow/50 border border-zen-yellow flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-zen-plum text-white flex items-center justify-center font-display font-bold">
-            LZ
-          </div>
-          <div>
-            <h4 className="font-extrabold text-zen-plum font-display">Lumina Zen Arcade</h4>
 
-          </div>
-        </div>
-      </div>
 
     </div>
   );

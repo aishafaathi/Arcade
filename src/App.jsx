@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Screen1_Login } from './components/Screen1_Login';
 import { Screen2_ArcadeCollection } from './components/Screen2_ArcadeCollection';
+import { OnboardingScreen } from './components/OnboardingScreen';
+import { ProfileScreen } from './components/ProfileScreen';
 import { MiniGameModal } from './components/MiniGameModal';
 import { EmbeddedGame } from './components/EmbeddedGame';
 import { AdminDashboard } from './components/AdminDashboard';
@@ -16,6 +18,7 @@ export function App() {
   const [isParticlesOn, setIsParticlesOn] = useState(true);
   const [activeMiniGame, setActiveMiniGame] = useState(null);
   const [profileRole, setProfileRole] = useState('player');
+  const [profile, setProfile] = useState(null);
 
   const [user, setUser] = useState({
     name: 'Anushka',
@@ -41,6 +44,7 @@ export function App() {
           .eq('id', session.user.id)
           .maybeSingle();
 
+        setProfile(profile || null);
         setProfileRole(profile?.role || 'player');
         setIsAuthenticated(true);
         setCurrentView('arcade');
@@ -67,7 +71,8 @@ export function App() {
         .eq('id', session.user.id)
         .maybeSingle()
         .then(({ data: profile }) => {
-          setProfileRole(profile?.role || 'player');
+          setProfile(profile || null);
+        setProfileRole(profile?.role || 'player');
         });
 
       setCurrentView('arcade');
@@ -90,8 +95,19 @@ export function App() {
       password,
       options: { data: { display_name: name } },
     });
+
     if (error) return { error: error.message };
-    if (!data.session) return { message: 'Account created. Check your email to confirm your account, then log in.' };
+
+    if (!data.session) {
+      return {
+        message:
+          'Account created. Check your email to confirm your account, then log in.',
+      };
+    }
+
+    localStorage.setItem('arcade_onboarding_pending', 'true');
+    setCurrentView('onboarding');
+
     return { error: null };
   };
 
@@ -166,6 +182,7 @@ export function App() {
           user={user}
           profileRole={profileRole}
           onGoToAdmin={handleGoToAdmin}
+          onGoToProfile={() => setCurrentView('profile')}
         />
       )}
 
@@ -176,6 +193,19 @@ export function App() {
             onLogin={handleLogin}
             onRegister={handleRegister}
             onGuestAccess={handleGuestAccess}
+          />
+        ) : currentView === 'profile' ? (
+          <ProfileScreen
+            user={user}
+            profile={profile}
+            onBack={() => setCurrentView('arcade')}
+          />
+        ) : currentView === 'onboarding' ? (
+          <OnboardingScreen
+            onComplete={() => {
+              localStorage.removeItem('arcade_onboarding_pending');
+              setCurrentView('arcade');
+            }}
           />
         ) : currentView === 'arcade' ? (
           <Screen2_ArcadeCollection
