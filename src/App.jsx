@@ -223,8 +223,6 @@ export function App() {
           <EmbeddedGame gameId="little_big_feelings" title="Little Big Feelings" onBackToArcade={handleGoToArcade} />
         ) : currentView === 'stick_man' ? (
           <EmbeddedGame gameId="stick_man" title="Stick Man to the Rescue" onBackToArcade={handleGoToArcade} />
-        ) : currentView === 'mindscape_defense' ? (
-          <EmbeddedGame gameId="mindscape_defense" title="Mindscape Defense" onBackToArcade={handleGoToArcade} />
         ) : currentView === 'feeling_fusion' ? (
           <EmbeddedGame gameId="feeling_fusion" title="Feeling Fusion" onBackToArcade={handleGoToArcade} />
         ) : currentView === 'myth_vs_fact' ? (

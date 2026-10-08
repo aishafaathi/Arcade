@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles, Search, Volume2, VolumeX, LogOut, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { Sparkles, Search, Volume2, VolumeX, LogOut, ArrowLeft, ShieldCheck, UserRound } from 'lucide-react';
 import { sounds } from '../SoundEffects';
 
 export function Navbar({ 
@@ -201,7 +201,7 @@ export function Navbar({
                 aria-label="Open profile"
                 className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-zen-pinkHeader border-2 border-white shadow-sm flex items-center justify-center font-bold text-xs sm:text-sm hover:scale-105 transition-transform cursor-pointer"
               >
-                {user?.avatar || '🧘'}
+                {user?.avatar || <UserRound className="w-4 h-4 sm:w-5 sm:h-5 text-zen-plum" />}
               </button>
               <div className="hidden md:block text-left">
                 <p className="text-xs font-bold text-zen-plum leading-tight">{user?.name || 'Zen Explorer'}</p>

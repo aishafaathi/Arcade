@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, Sparkles, Heart, ShieldCheck, ArrowRight, UserCheck } from 'lucide-react';
 import { sounds } from '../SoundEffects';
 
-export function Screen1_Login({ onLogin, onRegister, onGuestAccess }) {
+export function Screen1_Login({ onLogin, onRegister }) {
   const [isLoginTab, setIsLoginTab] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,11 +30,6 @@ export function Screen1_Login({ onLogin, onRegister, onGuestAccess }) {
     setIsSubmitting(false);
     if (result?.error) setFormError(result.error);
     else if (result?.message) setFormMessage(result.message);
-  };
-
-  const handleGuest = () => {
-    sounds.playClick();
-    onGuestAccess();
   };
 
   return (
@@ -244,18 +239,6 @@ export function Screen1_Login({ onLogin, onRegister, onGuestAccess }) {
               {formError && <p role="alert" className="text-xs font-semibold text-red-600">{formError}</p>}
               {formMessage && <p role="status" className="text-xs font-semibold text-emerald-700">{formMessage}</p>}
             </form>
-          </div>
-
-          {/* Guest Access Option */}
-          <div className="mt-6 pt-6 border-t border-zen-pinkAccent/30 text-center">
-            <p className="text-xs text-zen-mauve mb-2">Just exploring?</p>
-            <button
-              type="button"
-              onClick={handleGuest}
-              className="w-full py-2.5 px-4 rounded-2xl bg-zen-pinkLight border border-zen-pinkAccent text-zen-plum font-semibold text-xs hover:bg-zen-pinkCard transition-all flex items-center justify-center gap-2"
-            >
-              <span>Continue as Guest</span>
-            </button>
           </div>
 
         </div>

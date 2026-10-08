@@ -17,6 +17,13 @@ export function EmbeddedGame({ gameId, title, onBackToArcade }) {
   if (gameId === 'words_of_wisdom') {
     return (
       <div className="fixed inset-0 z-20 bg-slate-950">
+        <button
+          type="button"
+          onClick={onBackToArcade}
+          className="fixed top-4 left-4 z-50 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-bold text-zen-plum shadow-lg backdrop-blur hover:bg-white transition-all"
+        >
+          ← Back to Arcade
+        </button>
         <WordsOfWisdom />
       </div>
     );
@@ -26,6 +33,13 @@ export function EmbeddedGame({ gameId, title, onBackToArcade }) {
 
   return (
     <div className="fixed inset-0 z-20 bg-slate-950">
+      <button
+        type="button"
+        onClick={onBackToArcade}
+        className="fixed top-4 left-4 z-50 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-bold text-zen-plum shadow-lg backdrop-blur hover:bg-white transition-all"
+      >
+        ← Back to Arcade
+      </button>
       <iframe
         title={title}
         src={gamePath}

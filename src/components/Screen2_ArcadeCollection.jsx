@@ -75,6 +75,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       
       )
     },
+    /* Mindscape Defense temporarily disabled
     {
       id: 'mindscape_defense',
       title: 'Mindscape Defense',
@@ -91,6 +92,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
         />
       )
     },
+    */
     {
       id: 'feeling_fusion',
       title: 'Feeling Fusion',
@@ -150,7 +152,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
   );
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-10 max-w-7xl mx-auto">
+    <div className="relative min-h-[calc(100vh-4rem)] w-[calc(100%_-_1rem)] mx-auto py-4 px-2 sm:px-3 lg:px-4 overflow-hidden bg-[#FCEBEF] bg-[url(/arcade-doodles.png)] bg-repeat bg-[length:900px_auto]">
 
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -167,7 +169,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       </div>
 
       {/* Game Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
         {visibleGames.map((game) => (
           <div
             key={game.id}
