@@ -1,20 +1,25 @@
+
 import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles, Search, Volume2, VolumeX, LogOut, ArrowLeft, ShieldCheck, UserRound } from 'lucide-react';
+import {
+  Search,
+  Volume2,
+  VolumeX,
+  ArrowLeft,
+  ShieldCheck,
+  UserRound,
+} from 'lucide-react';
 import { sounds } from '../SoundEffects';
 
-export function Navbar({ 
-  isAuthenticated, 
-  currentView, 
-  onGoToArcade, 
-  onLogout, 
-  isDarkMode, 
-  setIsDarkMode, 
-  isAudioOn, 
-  setIsAudioOn, 
+export function Navbar({
+  isAuthenticated,
+  currentView,
+  onGoToArcade,
+  isAudioOn,
+  setIsAudioOn,
   user,
   profileRole,
   onGoToAdmin,
-  onGoToProfile
+  onGoToProfile,
 }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -42,30 +47,34 @@ export function Navbar({
     sounds.playToggle(nextState);
   };
 
-  const handleThemeToggle = () => {
-    setIsDarkMode(!isDarkMode);
-    sounds.playToggle(!isDarkMode);
-  };
-
-  const isGamePage = isAuthenticated && currentView !== 'arcade' && currentView !== 'login';
+  const isGamePage =
+    isAuthenticated &&
+    currentView !== 'arcade' &&
+    currentView !== 'login' &&
+    currentView !== 'profile' &&
+    currentView !== 'admin' &&
+    currentView !== 'onboarding';
 
   const getPageTitle = () => {
     if (!isAuthenticated) return 'Sign In / Register';
     if (currentView === 'arcade') return 'Arcade Collection';
+    if (currentView === 'profile') return 'My Profile';
+    if (currentView === 'admin') return 'Admin Area';
     if (currentView === 'words_of_wisdom') return 'Words of Wisdom';
     if (currentView === 'little_big_feelings') return 'Little Big Feelings';
     if (currentView === 'stick_man') return 'Stick Man to the Rescue';
-    if (currentView === 'mindscape_defense') return 'Mindscape Defense';
+    if (currentView === 'feeling_fusion') return 'Feeling Fusion';
+    if (currentView === 'myth_vs_fact') return 'Myth vs Fact';
+    if (currentView === 'signal_scout') return 'Signal Scout';
     return 'Arcade Collection';
   };
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 border-b border-zen-pinkAccent/30 shadow-sm transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
-        
+      <div className="w-full px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo & Breadcrumb */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div 
+          <div
             onClick={() => {
               if (isAuthenticated) {
                 sounds.playClick();
@@ -75,8 +84,13 @@ export function Navbar({
             className="flex items-center gap-2 cursor-pointer group shrink-0"
           >
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-zen-pinkAccent via-zen-pinkHeader to-zen-cream flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <img src="/arcade-logo.png" alt="Lumina Zen" className="w-10 h-10 sm:w-11 sm:h-11 object-contain" />
+              <img
+                src="/arcade-logo.png"
+                alt="Lumina Zen"
+                className="w-10 h-10 sm:w-11 sm:h-11 object-contain"
+              />
             </div>
+
             <div>
               <h1 className="text-base sm:text-xl font-bold text-zen-plum tracking-tight flex items-center gap-1 font-display">
                 Lumina Zen
@@ -93,9 +107,10 @@ export function Navbar({
           </div>
         </div>
 
-        {/* Exit Game Header Button (When inside a game) */}
+        {/* Exit Game Button */}
         {isGamePage && (
           <button
+            type="button"
             onClick={() => {
               sounds.playClick();
               onGoToArcade();
@@ -110,7 +125,6 @@ export function Navbar({
 
         {/* Right Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-
           {/* Search */}
           {isSearchOpen ? (
             <div className="flex items-center gap-1.5">
@@ -125,6 +139,7 @@ export function Navbar({
                   className="w-28 sm:w-44 bg-transparent outline-none border-0 px-2 text-xs text-zen-plum placeholder:text-zen-mauve"
                 />
               </div>
+
               <button
                 type="button"
                 onClick={() => {
@@ -159,23 +174,26 @@ export function Navbar({
 
           {/* Ambient Sound Toggle */}
           <button
+            type="button"
             onClick={handleAudioToggle}
-            title={isAudioOn ? "Mute Ambient Sound" : "Play Ambient Sound"}
+            title={isAudioOn ? 'Mute Ambient Sound' : 'Play Ambient Sound'}
             className={`p-2 sm:p-2.5 rounded-full transition-all duration-200 border ${
-              isAudioOn 
-                ? 'bg-zen-teal text-white border-zen-teal shadow-md' 
+              isAudioOn
+                ? 'bg-zen-teal text-white border-zen-teal shadow-md'
                 : 'bg-white/80 text-zen-plum border-zen-pinkAccent/50 hover:bg-zen-pinkCard'
             }`}
           >
-            {isAudioOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 opacity-60" />}
+            {isAudioOn ? (
+              <Volume2 className="w-4 h-4" />
+            ) : (
+              <VolumeX className="w-4 h-4 opacity-60" />
+            )}
           </button>
-
-          {/* Dark Mode Toggle */}
-
 
           {/* Admin Area */}
           {isAuthenticated && profileRole === 'admin' && (
             <button
+              type="button"
               onClick={() => {
                 sounds.playClick();
                 onGoToAdmin();
@@ -188,7 +206,7 @@ export function Navbar({
             </button>
           )}
 
-          {/* User Profile & Logout */}
+          {/* User Profile — logout is available inside Profile */}
           {isAuthenticated && (
             <div className="flex items-center gap-1.5 sm:gap-2 pl-1.5 sm:pl-2 border-l border-zen-pinkAccent/30">
               <button
@@ -199,28 +217,20 @@ export function Navbar({
                 }}
                 title="Profile"
                 aria-label="Open profile"
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-zen-pinkHeader border-2 border-white shadow-sm flex items-center justify-center font-bold text-xs sm:text-sm hover:scale-105 transition-transform cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-zen-pinkHeader border-2 border-white shadow-sm flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
               >
-                {user?.avatar || <UserRound className="w-4 h-4 sm:w-5 sm:h-5 text-zen-plum" />}
+                <UserRound className="w-4 h-4 sm:w-5 sm:h-5 text-zen-plum" />
               </button>
+
               <div className="hidden md:block text-left">
-                <p className="text-xs font-bold text-zen-plum leading-tight">{user?.name || 'Zen Explorer'}</p>
+                <p className="text-xs font-bold text-zen-plum leading-tight">
+                  {user?.name || 'Zen Explorer'}
+                </p>
                 <p className="text-[10px] text-zen-mauve">Logged In</p>
               </div>
-              <button
-                onClick={() => {
-                  sounds.playClick();
-                  onLogout();
-                }}
-                title="Log Out"
-                className="p-1.5 sm:p-2 rounded-full text-zen-mauve hover:text-rose-600 hover:bg-rose-50 transition-colors ml-0.5"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
             </div>
           )}
         </div>
-
       </div>
     </header>
   );

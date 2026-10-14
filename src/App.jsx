@@ -199,6 +199,7 @@ export function App() {
             user={user}
             profile={profile}
             onBack={() => setCurrentView('arcade')}
+	    onLogout={handleLogout}
           />
         ) : currentView === 'onboarding' ? (
           <OnboardingScreen
