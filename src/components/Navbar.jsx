@@ -2,11 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Search,
-  Volume2,
-  VolumeX,
   ArrowLeft,
   ShieldCheck,
   UserRound,
+  Info,
 } from 'lucide-react';
 import { sounds } from '../SoundEffects';
 
@@ -14,8 +13,6 @@ export function Navbar({
   isAuthenticated,
   currentView,
   onGoToArcade,
-  isAudioOn,
-  setIsAudioOn,
   user,
   profileRole,
   onGoToAdmin,
@@ -40,12 +37,6 @@ export function Navbar({
     );
   };
 
-  const handleAudioToggle = () => {
-    const nextState = !isAudioOn;
-    setIsAudioOn(nextState);
-    sounds.toggleAmbient(nextState);
-    sounds.playToggle(nextState);
-  };
 
   const isGamePage =
     isAuthenticated &&
@@ -172,23 +163,6 @@ export function Navbar({
             </button>
           )}
 
-          {/* Ambient Sound Toggle */}
-          <button
-            type="button"
-            onClick={handleAudioToggle}
-            title={isAudioOn ? 'Mute Ambient Sound' : 'Play Ambient Sound'}
-            className={`p-2 sm:p-2.5 rounded-full transition-all duration-200 border ${
-              isAudioOn
-                ? 'bg-zen-teal text-white border-zen-teal shadow-md'
-                : 'bg-white/80 text-zen-plum border-zen-pinkAccent/50 hover:bg-zen-pinkCard'
-            }`}
-          >
-            {isAudioOn ? (
-              <Volume2 className="w-4 h-4" />
-            ) : (
-              <VolumeX className="w-4 h-4 opacity-60" />
-            )}
-          </button>
 
           {/* Admin Area */}
           {isAuthenticated && profileRole === 'admin' && (
@@ -203,6 +177,22 @@ export function Navbar({
             >
               <ShieldCheck className="w-4 h-4" />
               <span className="hidden sm:inline">Admin Area</span>
+            </button>
+          )}
+
+          {/* About */}
+          {isAuthenticated && (
+            <button
+              type="button"
+              onClick={() => {
+                sounds.playClick();
+                window.dispatchEvent(new CustomEvent('arcade-open-about'));
+              }}
+              title="About Arcade"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#FFF3D6] text-zen-plum border border-[#F4C542] hover:bg-[#FCE7B2] transition-all text-xs font-bold"
+            >
+              <Info className="w-4 h-4" />
+              <span>About</span>
             </button>
           )}
 

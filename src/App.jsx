@@ -8,6 +8,7 @@ import { MiniGameModal } from './components/MiniGameModal';
 import { EmbeddedGame } from './components/EmbeddedGame';
 import { AdminDashboard } from './components/AdminDashboard';
 import { supabase } from './lib/supabase';
+import { AboutScreen } from './components/AboutScreen';
 
 export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,6 +20,12 @@ export function App() {
   const [activeMiniGame, setActiveMiniGame] = useState(null);
   const [profileRole, setProfileRole] = useState('player');
   const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const openAbout = () => setCurrentView('about');
+    window.addEventListener('arcade-open-about', openAbout);
+    return () => window.removeEventListener('arcade-open-about', openAbout);
+  }, []);
 
   const [user, setUser] = useState({
     name: 'Anushka',
@@ -78,7 +85,7 @@ export function App() {
       setCurrentView('arcade');
     });
 
-    return () => {
+  return () => {
       mounted = false;
       subscription.unsubscribe();
     };
@@ -169,7 +176,7 @@ export function App() {
       )}
 
       {/* Keep game pages fully immersive; each game owns its own controls. */}
-      {!isGameView && (
+      {!isGameView && isAuthenticated && currentView !== 'login' && (
         <Navbar
           isAuthenticated={isAuthenticated}
           currentView={currentView}
@@ -199,7 +206,9 @@ export function App() {
             user={user}
             profile={profile}
             onBack={() => setCurrentView('arcade')}
-	    onLogout={handleLogout}
+            onLogout={handleLogout}
+            isAudioOn={isAudioOn}
+            setIsAudioOn={setIsAudioOn}
           />
         ) : currentView === 'onboarding' ? (
           <OnboardingScreen
@@ -208,6 +217,8 @@ export function App() {
               setCurrentView('arcade');
             }}
           />
+        ) : currentView === 'about' ? (
+          <AboutScreen onBack={() => setCurrentView('arcade')} />
         ) : currentView === 'arcade' ? (
           <Screen2_ArcadeCollection
             onSelectGame={handleSelectGame}

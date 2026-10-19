@@ -33,8 +33,25 @@ export function Screen1_Login({ onLogin, onRegister }) {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-zen-pinkLight via-[#F9E9EC] to-zen-cream relative overflow-hidden">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#FCEBEF] bg-[url(/arcade-doodles.png)] bg-repeat bg-[length:900px_auto] relative overflow-hidden">
       
+      {/* Yellow, black and orange Arcade doodles */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <span className="absolute left-[5%] top-20 text-4xl text-[#F4C542] opacity-70">✦</span>
+        <span className="absolute right-[8%] top-32 text-4xl text-[#171717] opacity-80">✳</span>
+        <span className="absolute left-[12%] bottom-16 text-3xl text-[#171717] opacity-70">✦</span>
+        <span className="absolute right-[20%] bottom-24 text-4xl text-[#171717] opacity-70">★</span>
+        <span className="absolute right-[8%] top-32 text-3xl text-[#171717] opacity-60">✳</span>
+        <span className="absolute left-[45%] top-8 text-3xl text-[#F28C28] opacity-70">✿</span>
+        <span className="absolute right-[15%] bottom-20 text-4xl text-[#F4C542] opacity-60">★</span>
+        <span className="absolute left-[12%] bottom-16 text-3xl text-[#171717] opacity-50">✦</span>
+        <span className="absolute left-[25%] top-[35%] text-2xl text-[#F28C28] opacity-60">✧</span>
+        <span className="absolute right-[35%] top-[48%] text-3xl text-[#F4C542] opacity-60">✳</span>
+        <span className="absolute left-[7%] top-[62%] text-2xl text-[#171717] opacity-50">●</span>
+        <span className="absolute right-[6%] top-[68%] text-3xl text-[#F28C28] opacity-60">✦</span>
+        <span className="absolute left-[38%] bottom-12 text-2xl text-[#F4C542] opacity-70">✿</span>
+      </div>
+
       {/* Background Decorative Floating Bubbles & Glows */}
       <div className="absolute top-10 left-10 w-64 h-64 bg-zen-pinkAccent/30 rounded-full blur-3xl animate-pulse-glow" />
       <div className="absolute bottom-10 right-10 w-80 h-80 bg-zen-tealBg/40 rounded-full blur-3xl animate-pulse-glow" />

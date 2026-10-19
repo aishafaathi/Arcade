@@ -152,7 +152,23 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
   );
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] w-[calc(100%_-_1rem)] mx-auto py-4 px-2 sm:px-3 lg:px-4 overflow-hidden bg-[#FCEBEF] bg-[url(/arcade-doodles.png)] bg-repeat bg-[length:900px_auto]">
+    <div className="relative min-h-[calc(100vh-4rem)] w-full mx-auto py-4 px-3 sm:px-5 lg:px-8 overflow-hidden bg-[#FCEBEF] bg-[url(/arcade-doodles.png)] bg-repeat bg-[length:900px_auto]">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <span className="absolute left-[5%] top-20 text-4xl text-[#F4C542] opacity-70">✦</span>
+        <span className="absolute right-[8%] top-32 text-3xl text-[#171717] opacity-60">✳</span>
+        <span className="absolute left-[45%] top-8 text-3xl text-[#F28C28] opacity-70">✿</span>
+        <span className="absolute right-[20%] bottom-24 text-4xl text-[#F4C542] opacity-60">★</span>
+        <span className="absolute left-[12%] bottom-16 text-3xl text-[#171717] opacity-50">✦</span>
+        <span className="absolute left-[25%] top-[35%] text-2xl text-[#F28C28] opacity-60">✧</span>
+        <span className="absolute right-[35%] top-[48%] text-3xl text-[#F4C542] opacity-60">✳</span>
+        <span className="absolute left-[7%] top-[62%] text-2xl text-[#171717] opacity-50">●</span>
+        <span className="absolute right-[6%] top-[68%] text-3xl text-[#F28C28] opacity-60">✦</span>
+        <span className="absolute left-[38%] bottom-12 text-2xl text-[#F4C542] opacity-70">✿</span>
+        <span className="absolute right-[42%] top-24 text-xl text-[#171717] opacity-50">✧</span>
+        <span className="absolute left-[18%] top-12 text-xl text-[#F28C28] opacity-60">●</span>
+        <span className="absolute right-[12%] bottom-12 text-2xl text-[#F4C542] opacity-70">✳</span>
+        <span className="absolute left-[55%] bottom-28 text-2xl text-[#171717] opacity-50">✦</span>
+      </div>
 
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">

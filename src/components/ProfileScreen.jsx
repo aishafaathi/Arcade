@@ -11,10 +11,12 @@ import {
   Trophy,
   Clock,
   LoaderCircle,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
-export function ProfileScreen({ user, profile, onBack, onLogout }) {
+export function ProfileScreen({ user, profile, onBack, onLogout, isAudioOn, setIsAudioOn }) {
   const [progress, setProgress] = useState([]);
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +24,6 @@ export function ProfileScreen({ user, profile, onBack, onLogout }) {
 
   const name = profile?.name || user?.user_metadata?.display_name || 'Player';
   const email = user?.email || 'No email available';
-  const role = profile?.role || 'player';
   const isActive = profile?.is_active !== false;
 
   useEffect(() => {
@@ -104,7 +105,7 @@ export function ProfileScreen({ user, profile, onBack, onLogout }) {
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#FFF9F5] px-4 py-8 sm:px-6 lg:px-10">
       <div className="max-w-3xl mx-auto">
-        <div className="mb-6 flex items-center justify-between gap-3">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <button
             type="button"
             onClick={onBack}
@@ -114,6 +115,16 @@ export function ProfileScreen({ user, profile, onBack, onLogout }) {
             Back to Arcade
           </button>
 
+          <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsAudioOn?.(!isAudioOn)}
+            aria-label={isAudioOn ? 'Turn sound off' : 'Turn sound on'}
+            className="flex items-center gap-2 rounded-full bg-white border border-amber-200 px-4 py-2 text-sm font-bold text-zen-plum hover:bg-amber-50 transition"
+          >
+            {isAudioOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            Sound {isAudioOn ? 'On' : 'Off'}
+          </button>
           <button
             type="button"
             onClick={onLogout}
@@ -122,10 +133,12 @@ export function ProfileScreen({ user, profile, onBack, onLogout }) {
             <LogOut className="w-4 h-4" />
             Log Out
           </button>
+          </div>
         </div>
 
         <div className="bg-white rounded-[2rem] border border-zen-pinkAccent/30 shadow-zen-lg overflow-hidden">
           <div className="bg-gradient-to-r from-[#FFF3F5] to-[#FCEBEF] px-6 sm:px-10 py-10 text-center">
+
             <div className="mx-auto w-24 h-24 rounded-full bg-zen-pinkAccent/40 flex items-center justify-center shadow-sm">
               <UserRound className="w-11 h-11 text-zen-plum" />
             </div>
@@ -140,16 +153,15 @@ export function ProfileScreen({ user, profile, onBack, onLogout }) {
             {[
               { label: 'Name', value: name, Icon: UserRound },
               { label: 'Email', value: email, Icon: Mail },
-              { label: 'Account Type', value: role, Icon: Shield },
               { label: 'Account Status', value: isActive ? 'Active' : 'Inactive', Icon: CheckCircle },
             ].map(({ label, value, Icon }) => (
-              <div key={label} className="flex items-center gap-4 rounded-2xl bg-[#FFF9F5] p-4">
+              <div key={label} className="flex items-center gap-4 rounded-2xl bg-[#FFF9F5] p-4 min-w-0">
                 <div className="w-10 h-10 shrink-0 rounded-xl bg-zen-pinkAccent/40 flex items-center justify-center">
                   <Icon className="w-5 h-5 text-zen-plum" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-semibold text-zen-mauve">{label}</p>
-                  <p className="text-sm font-bold text-zen-plum capitalize break-words">
+                  <p className={`text-sm font-bold text-zen-plum break-words [overflow-wrap:anywhere] ${label === 'Email' ? 'normal-case' : 'capitalize'}`}>
                     {value}
                   </p>
                 </div>
