@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Screen1_Login } from './components/Screen1_Login';
 import { Screen2_ArcadeCollection } from './components/Screen2_ArcadeCollection';
+import { DailyCheckInScreen } from './components/DailyCheckInScreen';
 import { OnboardingScreen } from './components/OnboardingScreen';
 import { ProfileScreen } from './components/ProfileScreen';
 import { MiniGameModal } from './components/MiniGameModal';
@@ -49,7 +50,7 @@ export function App() {
 
         const { data: profile } = await supabase
           .from('profiles')
-          .select('name, role, is_active')
+          .select('name, role, is_active, daily_mood, daily_mood_date')
           .eq('id', session.user.id)
           .maybeSingle();
 
@@ -77,7 +78,7 @@ export function App() {
 
       supabase
         .from('profiles')
-        .select('name, role, is_active')
+        .select('name, role, is_active, daily_mood, daily_mood_date')
         .eq('id', session.user.id)
         .maybeSingle()
         .then(({ data: profile }) => {
@@ -143,6 +144,36 @@ export function App() {
     }
   };
 
+  const handleSaveDailyMood = async (mood) => {
+    if (!user?.id) {
+      return { error: 'Please sign in to save your mood.' };
+    }
+
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        daily_mood: mood,
+        daily_mood_date: today,
+      })
+      .eq('id', user.id);
+
+    if (error) {
+      console.error('Could not save daily mood:', error);
+      return { error: 'Your mood could not be saved. Please try again.' };
+    }
+
+    setProfile((previous) => ({
+      ...(previous || {}),
+      daily_mood: mood,
+      daily_mood_date: today,
+    }));
+
+    return { error: null };
+  };
+
   const handleSelectGame = (gameId) => {
     setCurrentView(gameId);
   };
@@ -193,6 +224,7 @@ export function App() {
           profileRole={profileRole}
           onGoToAdmin={handleGoToAdmin}
           onGoToProfile={() => setCurrentView('profile')}
+          onGoToDailyCheckIn={() => setCurrentView('daily_checkin')}
         />
       )}
 
@@ -224,15 +256,31 @@ export function App() {
           />
         ) : currentView === 'about' ? (
           <AboutScreen onBack={() => setCurrentView('arcade')} />
+        ) : currentView === 'daily_checkin' ? (
+          <DailyCheckInScreen
+            user={user}
+            profile={profile}
+            onSaveDailyMood={handleSaveDailyMood}
+            onSelectGame={handleSelectGame}
+            onBackToArcade={handleGoToArcade}
+          />
         ) : currentView === 'arcade' ? (
           <Screen2_ArcadeCollection
             onSelectGame={handleSelectGame}
+            user={user}
+            profile={profile}
+            onSaveDailyMood={handleSaveDailyMood}
           />
         ) : currentView === 'admin' ? (
           profileRole === 'admin' ? (
             <AdminDashboard onBackToArcade={() => setCurrentView('profile')} />
           ) : (
-            <Screen2_ArcadeCollection onSelectGame={handleSelectGame} />
+            <Screen2_ArcadeCollection
+              onSelectGame={handleSelectGame}
+              user={user}
+              profile={profile}
+              onSaveDailyMood={handleSaveDailyMood}
+            />
           )
         ) : currentView === 'words_of_wisdom' ? (
           <EmbeddedGame gameId="words_of_wisdom" title="Words of Wisdom" onBackToArcade={handleGoToArcade} />
@@ -249,6 +297,9 @@ export function App() {
         ) : (
           <Screen2_ArcadeCollection
             onSelectGame={handleSelectGame}
+            user={user}
+            profile={profile}
+            onSaveDailyMood={handleSaveDailyMood}
           />
         )}
       </div>

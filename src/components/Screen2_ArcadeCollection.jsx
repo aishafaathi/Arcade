@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Search, Sparkles, Play, Rocket } from 'lucide-react';
 import { sounds } from '../SoundEffects';
 
-export function Screen2_ArcadeCollection({ onSelectGame }) {
+
+
+export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDailyMood }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -171,7 +173,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       </div>
 
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zen-plum font-display">
             Arcade

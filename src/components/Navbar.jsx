@@ -17,6 +17,7 @@ export function Navbar({
   profileRole,
   onGoToAdmin,
   onGoToProfile,
+  onGoToDailyCheckIn,
 }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -50,6 +51,7 @@ export function Navbar({
     if (!isAuthenticated) return 'Sign In / Register';
     if (currentView === 'arcade') return 'Arcade Collection';
     if (currentView === 'profile') return 'My Profile';
+    if (currentView === 'daily_checkin') return 'Daily Check-In';
     if (currentView === 'admin') return 'Admin Area';
     if (currentView === 'words_of_wisdom') return 'Words of Wisdom';
     if (currentView === 'little_big_feelings') return 'Little Big Feelings';
@@ -163,6 +165,24 @@ export function Navbar({
             </button>
           )}
 
+
+          {isAuthenticated && (
+            <button
+              type="button"
+              onClick={() => {
+                sounds.playClick();
+                onGoToDailyCheckIn?.();
+              }}
+              className={`rounded-full px-3 py-2 text-xs sm:text-sm font-bold border transition-colors ${
+                currentView === 'daily_checkin'
+                  ? 'bg-zen-plum text-white border-zen-plum'
+                  : 'bg-white/80 text-zen-plum border-zen-pinkAccent/50 hover:bg-zen-pinkCard'
+              }`}
+            >
+              <span className="hidden sm:inline">Daily Check-In</span>
+              <span className="sm:hidden">Check-In</span>
+            </button>
+          )}
 
           {/* User Profile — logout is available inside Profile */}
           {isAuthenticated && (
