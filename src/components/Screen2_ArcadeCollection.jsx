@@ -174,7 +174,7 @@ export function Screen2_ArcadeCollection({ onSelectGame }) {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zen-plum font-display">
-            Arcade Collection
+            Arcade
           </h2>
           <p className="text-sm text-zen-mauve mt-1">
             Choose a game to enter its dedicated hub. You can exit back to the arcade at any time.

@@ -9,6 +9,7 @@ import { EmbeddedGame } from './components/EmbeddedGame';
 import { AdminDashboard } from './components/AdminDashboard';
 import { supabase } from './lib/supabase';
 import { AboutScreen } from './components/AboutScreen';
+import { BreathingSupport } from './components/BreathingSupport';
 
 export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -207,6 +208,8 @@ export function App() {
           <ProfileScreen
             user={user}
             profile={profile}
+            profileRole={profileRole}
+            onGoToAdmin={handleGoToAdmin}
             onBack={() => setCurrentView('arcade')}
             onLogout={handleLogout}
             isAudioOn={isAudioOn}
@@ -249,6 +252,11 @@ export function App() {
           />
         )}
       </div>
+
+      {/* Always-available calming support for signed-in users */}
+      {isAuthenticated && currentView !== 'login' && (
+        <BreathingSupport />
+      )}
 
       {/* Mini Game Modal Overlay */}
       {activeMiniGame && (

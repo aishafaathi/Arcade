@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   Mail,
   Shield,
+  ShieldCheck,
   UserRound,
   CheckCircle,
   Pencil,
@@ -19,7 +20,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
-export function ProfileScreen({ user, profile, onBack, onLogout, isAudioOn, setIsAudioOn }) {
+export function ProfileScreen({ user, profile, profileRole, onGoToAdmin, onBack, onLogout, isAudioOn, setIsAudioOn }) {
   const [editing, setEditing] = useState(false);
   const [editName, setEditName] = useState(profile?.name || '');
   const [avatarKey, setAvatarKey] = useState('cat');
@@ -228,6 +229,16 @@ export function ProfileScreen({ user, profile, onBack, onLogout, isAudioOn, setI
           </button>
 
           <div className="flex flex-wrap items-center gap-2">
+          {profileRole === 'admin' && (
+            <button
+              type="button"
+              onClick={onGoToAdmin}
+              className="flex items-center gap-2 rounded-full bg-zen-plum px-4 py-2 text-sm font-bold text-white hover:bg-zen-plumHover transition"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              Admin Dashboard
+            </button>
+          )}
           <button
             type="button"
             onClick={() => window.dispatchEvent(new CustomEvent('arcade-open-about'))}
