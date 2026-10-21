@@ -180,22 +180,6 @@ export function Navbar({
             </button>
           )}
 
-          {/* About */}
-          {isAuthenticated && (
-            <button
-              type="button"
-              onClick={() => {
-                sounds.playClick();
-                window.dispatchEvent(new CustomEvent('arcade-open-about'));
-              }}
-              title="About Arcade"
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#FFF3D6] text-zen-plum border border-[#F4C542] hover:bg-[#FCE7B2] transition-all text-xs font-bold"
-            >
-              <Info className="w-4 h-4" />
-              <span>About</span>
-            </button>
-          )}
-
           {/* User Profile — logout is available inside Profile */}
           {isAuthenticated && (
             <div className="flex items-center gap-1.5 sm:gap-2 pl-1.5 sm:pl-2 border-l border-zen-pinkAccent/30">

@@ -40,6 +40,7 @@ export function App() {
       if (!mounted) return;
       if (session?.user) {
         setUser({
+          id: session.user.id,
           name: session.user.user_metadata?.display_name || session.user.email?.split('@')[0] || 'Zen Explorer',
           email: session.user.email || '',
           avatar: '🧘',
@@ -67,6 +68,7 @@ export function App() {
         return;
       }
       setUser({
+        id: session.user.id,
         name: session.user.user_metadata?.display_name || session.user.email?.split('@')[0] || 'Zen Explorer',
         email: session.user.email || '',
         avatar: '🧘',
