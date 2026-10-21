@@ -164,22 +164,6 @@ export function Navbar({
           )}
 
 
-          {/* Admin Area */}
-          {isAuthenticated && profileRole === 'admin' && (
-            <button
-              type="button"
-              onClick={() => {
-                sounds.playClick();
-                onGoToAdmin();
-              }}
-              title="Admin Area"
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-zen-plum text-white hover:bg-zen-plumHover transition-all text-xs font-bold"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span className="hidden sm:inline">Admin Area</span>
-            </button>
-          )}
-
           {/* User Profile — logout is available inside Profile */}
           {isAuthenticated && (
             <div className="flex items-center gap-1.5 sm:gap-2 pl-1.5 sm:pl-2 border-l border-zen-pinkAccent/30">

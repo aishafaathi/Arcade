@@ -230,7 +230,7 @@ export function App() {
           />
         ) : currentView === 'admin' ? (
           profileRole === 'admin' ? (
-            <AdminDashboard onBackToArcade={handleGoToArcade} />
+            <AdminDashboard onBackToArcade={() => setCurrentView('profile')} />
           ) : (
             <Screen2_ArcadeCollection onSelectGame={handleSelectGame} />
           )

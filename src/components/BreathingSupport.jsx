@@ -51,7 +51,7 @@ export function BreathingSupport() {
           aria-modal="true"
           aria-labelledby="breathing-support-title"
         >
-          <section className="relative w-full max-w-md rounded-[2rem] border border-rose-100 bg-[#FFF8FA] p-6 text-center shadow-2xl sm:p-8">
+          <section className="relative w-full max-w-md rounded-[2rem] border border-rose-100 bg-[#FCEBEF] bg-[url(/arcade-doodles.png)] bg-repeat bg-[length:900px_auto] p-6 text-center shadow-2xl sm:p-8">
             <button
               type="button"
               onClick={closePanel}

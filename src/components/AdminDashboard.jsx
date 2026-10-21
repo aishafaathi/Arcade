@@ -162,7 +162,7 @@ export function AdminDashboard({
   ];
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-10 max-w-7xl mx-auto">
+    <div className="relative min-h-[calc(100vh-4rem)] max-w-7xl mx-auto overflow-hidden bg-[#FCEBEF] bg-[url(/arcade-doodles.png)] bg-repeat bg-[length:900px_auto] p-4 sm:p-6 lg:p-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zen-pinkAccent/40 text-zen-plum text-xs font-bold mb-2">
@@ -185,7 +185,7 @@ export function AdminDashboard({
           className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-zen-plum hover:bg-zen-plumHover text-white font-bold text-xs shadow-md transition-all"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Arcade
+          Back to Profile
         </button>
       </div>
 
