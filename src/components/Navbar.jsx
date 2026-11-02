@@ -49,7 +49,7 @@ export function Navbar({
 
   const getPageTitle = () => {
     if (!isAuthenticated) return 'Sign In / Register';
-    if (currentView === 'arcade') return 'Arcade Collection';
+    if (currentView === 'arcade') return 'Arcade';
     if (currentView === 'profile') return 'My Profile';
     if (currentView === 'daily_checkin') return 'Daily Check-In';
     if (currentView === 'admin') return 'Admin Area';
@@ -59,7 +59,7 @@ export function Navbar({
     if (currentView === 'feeling_fusion') return 'Feeling Fusion';
     if (currentView === 'myth_vs_fact') return 'Myth vs Fact';
     if (currentView === 'signal_scout') return 'Signal Scout';
-    return 'Arcade Collection';
+    return 'Arcade';
   };
 
   return (

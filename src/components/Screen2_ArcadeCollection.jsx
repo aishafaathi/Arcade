@@ -39,7 +39,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
         <img
           src="/words-of-wisdom-logo.svg"
           alt="Words of Wisdom"
-          className="h-32 w-full object-contain"
+          className="h-28 sm:h-32 lg:h-36 w-full object-contain"
         />
       )
     },
@@ -55,7 +55,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
         <img
           src="/game-logos/stick-man.svg"
           alt="Stick Man to the Rescue"
-          className="h-32 w-full object-contain"
+          className="h-28 sm:h-32 lg:h-36 w-full object-contain"
         />
       
       )
@@ -72,7 +72,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
         <img
           src="/game-logos/little-big-feelings.svg"
           alt="Little Big Feelings"
-          className="h-32 w-full object-contain"
+          className="h-28 sm:h-32 lg:h-36 w-full object-contain"
         />
       
       )
@@ -90,7 +90,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
         <img
           src="/mindscape-defense-logo.svg"
           alt="Mindscape Defense"
-          className="h-32 w-full object-contain"
+          className="h-28 sm:h-32 lg:h-36 w-full object-contain"
         />
       )
     },
@@ -107,7 +107,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
         <img
           src="/game-logos/feeling-fusion.svg"
           alt="Feeling Fusion"
-          className="h-32 w-full object-contain"
+          className="h-28 sm:h-32 lg:h-36 w-full object-contain"
         />
       
       )
@@ -124,7 +124,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
         <img
           src="/game-logos/myth-vs-fact.svg"
           alt="Myth vs Fact"
-          className="h-32 w-full object-contain"
+          className="h-28 sm:h-32 lg:h-36 w-full object-contain"
         />
       
       )
@@ -141,7 +141,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
         <img
           src="/game-logos/signal-scout.svg"
           alt="Signal Scout"
-          className="h-32 w-full object-contain"
+          className="h-28 sm:h-32 lg:h-36 w-full object-contain"
         />
       
       )
@@ -187,7 +187,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
       </div>
 
       {/* Game Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+      <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
         {visibleGames.map((game) => (
           <div
             key={game.id}
@@ -195,19 +195,19 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
               sounds.playLaunch();
               onSelectGame(game.id);
             }}
-            className={`bg-gradient-to-b ${game.bgGradient} rounded-3xl p-5 border ${game.borderColor} shadow-zen hover:shadow-zen-lg transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1`}
+            className={`bg-gradient-to-b ${game.bgGradient} rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-5 border ${game.borderColor} shadow-zen hover:shadow-zen-lg transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1`}
           >
             <div>
               {/* Card Illustration */}
               <div className="relative rounded-2xl overflow-hidden mb-4 shadow-sm group-hover:scale-102 transition-transform duration-300">
                 {game.imageSvg}
                 <span className={`absolute top-3 left-3 text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-sm ${game.badgeColor}`}>
-                  {game.tag}
+                  {game.category}
                 </span>
               </div>
 
               {/* Title & Category */}
-              <h3 className="text-xl font-extrabold text-zen-plum font-display group-hover:text-zen-mauve transition-colors">
+              <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-zen-plum font-display group-hover:text-zen-mauve transition-colors break-words">
                 {game.title}
               </h3>
               <p className="text-xs font-semibold text-zen-mauve mt-0.5 mb-2">
@@ -215,7 +215,7 @@ export function Screen2_ArcadeCollection({ onSelectGame, user, profile, onSaveDa
               </p>
 
               {/* Description */}
-              <p className="text-xs text-zen-plum/80 leading-relaxed mb-6">
+              <p className="text-xs sm:text-sm text-zen-plum/80 leading-relaxed mb-4 sm:mb-6">
                 {game.description}
               </p>
             </div>

@@ -194,7 +194,7 @@ export function App() {
   }
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 relative ${
+    <div className={`w-full min-h-screen overflow-x-clip transition-colors duration-500 relative ${
       isDarkMode 
         ? 'bg-[#2A1D22] text-[#F3EFEF]' 
         : 'bg-[#FDF2F4] text-[#4A353B]'
